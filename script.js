@@ -39,6 +39,7 @@ function  createTaskElement(task,index)
         let tickbox = document.createElement("input");
         let span = document.createElement("span");
         let delbutton = document.createElement("button");
+        let editbutton = document.createElement("button");
 
 
 
@@ -51,6 +52,43 @@ function  createTaskElement(task,index)
             span.style.textDecoration = "line-through";
         }
 
+
+        editbutton.textContent = "Edit";
+        editbutton.addEventListener("click", function ()
+            {
+                let editInput =document.createElement("input");
+                editInput.type = "text";
+                editInput.value = task.text;
+
+                li.replaceChild(editInput , span);
+                editInput.focus();
+
+                function saveedit()
+                {
+                    let new_text =editInput.value.trim();
+                    if(new_text ==="")
+                    {
+                        alert("input can't be empty.");
+                        return;
+                    }
+
+                    list_of_task[index].text=new_text;
+                    savetask();
+                    rendertask();
+                }
+                editInput.addEventListener("keydown", function (event)
+                {
+                    if(event.key==="Enter")
+                    {
+                        saveedit();
+                    }
+                });
+
+                editInput.addEventListener("blur", saveedit);
+
+
+            }
+        )
 
          delbutton.textContent = "del";
 
@@ -78,6 +116,7 @@ function  createTaskElement(task,index)
 
         li.appendChild(tickbox);
         li.appendChild(span);
+        li.appendChild(editbutton);
         li.appendChild(delbutton);
         list.appendChild(li);
 }

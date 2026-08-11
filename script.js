@@ -1,12 +1,17 @@
 const input = document.getElementById("taskInput");
 const add_Button =document.getElementById("addButton");
 const list =document.getElementById("listTasks");
-
+const  category_selector = document.getElementById("categorySelector");
 
 
 let list_of_task = (JSON.parse(
         localStorage.getItem("list_of_task")))
         || [] ;
+list_of_task = list_of_task.map(task => ({
+    text : task.text,
+    compelet : task.complete,
+    category : task.category || "general"
+}));
 
 
 
@@ -40,8 +45,7 @@ function  createTaskElement(task,index)
         let span = document.createElement("span");
         let delbutton = document.createElement("button");
         let editbutton = document.createElement("button");
-
-
+        let categoryTag=document.createElement("span");
 
         tickbox.type="checkbox";
         tickbox.checked = task.complete;
@@ -51,6 +55,10 @@ function  createTaskElement(task,index)
         {
             span.style.textDecoration = "line-through";
         }
+
+        categoryTag.textContent=task.category;
+        categoryTag.classList.add("category_tag");
+
 
 
         editbutton.textContent = "Edit";
@@ -118,6 +126,7 @@ function  createTaskElement(task,index)
         li.appendChild(span);
         li.appendChild(editbutton);
         li.appendChild(delbutton);
+        li.appendChild(categoryTag);
         list.appendChild(li);
 }
 
@@ -129,7 +138,7 @@ function main_func()
         return;
     }
 
-    let task = { text : input.value.trim() , complete : false };
+    let task = { text : input.value.trim() , complete : false , category : category_selector.value};
     list_of_task.push(task);
     savetask();
     rendertask();

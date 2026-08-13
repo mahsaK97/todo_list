@@ -2,7 +2,7 @@ const input = document.getElementById("taskInput");
 const add_Button =document.getElementById("addButton");
 const list =document.getElementById("listTasks");
 const  category_selector = document.getElementById("categorySelector");
-
+const deadline_input = document.getElementById("deadline");
 
 let list_of_task = (JSON.parse(
         localStorage.getItem("list_of_task")))
@@ -10,7 +10,8 @@ let list_of_task = (JSON.parse(
 list_of_task = list_of_task.map(task => ({
     text : task.text,
     compelet : task.complete,
-    category : task.category || "general"
+    category : task.category || "general",
+    dealine : task.deadline || ""
 }));
 
 
@@ -46,6 +47,7 @@ function  createTaskElement(task,index)
         let delbutton = document.createElement("button");
         let editbutton = document.createElement("button");
         let categoryTag=document.createElement("span");
+        let deadlineTag=document.createElement("span");
 
         tickbox.type="checkbox";
         tickbox.checked = task.complete;
@@ -58,6 +60,17 @@ function  createTaskElement(task,index)
 
         categoryTag.textContent=task.category;
         categoryTag.classList.add("category_tag");
+
+        if(task.deadline)
+        {
+            deadlineTag.textContent = task.deadline;
+            deadlineTag.classList.add("deadline_tag");
+            let today = new Date().toISOString().split("T")[0];
+            if(task.deadline < today && !task.complete)
+            {
+                deadlineTag.classList.add("overdue");
+            }
+        }
 
 
 
@@ -127,6 +140,7 @@ function  createTaskElement(task,index)
         li.appendChild(editbutton);
         li.appendChild(delbutton);
         li.appendChild(categoryTag);
+        li.appendChild(deadlineTag);
         list.appendChild(li);
 }
 
@@ -138,12 +152,13 @@ function main_func()
         return;
     }
 
-    let task = { text : input.value.trim() , complete : false , category : category_selector.value};
+    let task = { text : input.value.trim() , complete : false , category : category_selector.value , deadline :deadline_input.value};
     list_of_task.push(task);
     savetask();
     rendertask();
 
     input.value = "";
+    deadline_input.value ="";
     input.focus();
 }
 rendertask();

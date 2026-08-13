@@ -1,166 +1,167 @@
+/* متغیرهای تم آبی پاستلی تمام‌صفحه */
+:root {
+  --bg-main: #e0f2fe;            /* پس‌زمینه کل صفحه: آبی پاستلی روشن */
+  --card-bg: #f0f9ff;            /* پس‌زمینه کارت اصلی: آبی بسیار ملایم */
+  --input-bg: #ffffff;           /* پس‌زمینه فیلدها: سفید پاک */
+  --item-bg: #ebf8ff;            /* پس‌زمینه هر تسک: آبی‌آسمانی روشن */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+  --text-primary: #1e3a8a;       /* متن اصلی: سرمه‌ای ملایم */
+  --text-secondary: #3b82f6;     /* متن فرعی: آبی روشن */
+  --border-color: #bae6fd;       /* خطوط مرزی: آبی پاستلی */
+
+  --primary-color: #38bdf8;      /* آبی پاستلی زنده برای دکمه اصلی */
+  --primary-hover: #0284c7;
+
+  --edit-color: #fde047;         /* زرد پاستلی نرم */
+  --edit-hover: #eab308;
+  --delete-color: #fca5a5;       /* قرمز/صورتی پاستلی */
+  --delete-hover: #f87171;
+
+  --shadow-soft: 0 10px 25px -5px rgba(56, 189, 248, 0.25);
 }
 
-body{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-
-    background:linear-gradient(
-        135deg,
-        #0f4c81,
-        #1d7cb8,
-        #57c5e8,
-        #a7f3ff
-    );
+/* پس‌زمینه کل مرورگر */
+html {
+  background-color: var(--bg-main);
+  min-height: 100vh;
 }
 
-h1{
-    color:white;
-    margin-bottom:25px;
-    font-size:42px;
-    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--card-bg) !important; /* پس‌زمینه آبی ملایم کارت */
+  color: var(--text-primary);
+  max-width: 850px;
+  margin: 50px auto;
+  padding: 35px;
+  border-radius: 24px;
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
 }
 
-/* Task input */
-input{
-    width:300px;
-    padding:12px;
-    border:none;
-    border-radius:12px;
-    outline:none;
-    font-size:16px;
-    margin-right:10px;
+h1 {
+  text-align: center;
+  color: var(--text-primary);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-transform: capitalize;
 }
 
-/* Category */
-#categorySelector{
-    width:150px;
-    padding:12px;
-    border:none;
-    border-radius:12px;
-    outline:none;
-
-    font-size:16px;
-    color:#083358;
-    background:white;
-
-    cursor:pointer;
-
-    margin-right:10px;
-
-    box-shadow:0 4px 10px rgba(0,0,0,.1);
-
-    transition:.3s;
+/* برچسب‌ها (Labels) */
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-right: 6px;
+  margin-left: 12px;
+  text-transform: capitalize;
 }
 
-#categorySelector:hover{
-    box-shadow:0 6px 15px rgba(0,0,0,.18);
+/* ورودی‌ها و منوی کشویی */
+input[type="text"],
+input[type="date"],
+select {
+  padding: 11px 16px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  outline: none;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background-color: var(--input-bg);
+  transition: all 0.25s ease;
+  margin-right: 14px;
 }
 
-#categorySelector:focus{
-    box-shadow:0 0 0 3px rgba(0,180,216,.35);
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.3);
 }
 
-/* Add button */
-button{
-    padding:12px 18px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:15px;
-    transition:.3s;
+/* دکمه Add */
+#addButton {
+  padding: 11px 24px;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
 }
 
-#addButton{
-    background:#008cba;
-    color:white;
+#addButton:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
 }
 
-#addButton:hover{
-    background:#00b4d8;
-    transform:scale(1.05);
+#addButton:active {
+  transform: translateY(0);
 }
 
-/* Task list */
-#listTasks{
-    margin-top:30px;
-    width:420px;
+/* لیست تسک‌ها */
+#listTasks {
+  list-style: none;
+  padding: 0;
+  margin-top: 35px;
 }
 
-#listTasks li{
-    list-style:none;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    margin-bottom:15px;
-    padding:15px;
-
-    background:rgba(255,255,255,.25);
-    backdrop-filter:blur(10px);
-
-    border-radius:18px;
-
-    color:#083358;
-    font-weight:bold;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.15);
+/* هر آیتم تسک */
+#listTasks li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background-color: var(--item-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: 14px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
 }
 
-#listTasks span{
-    flex:1;
-    margin-left:12px;
-    font-size:18px;
+#listTasks li:hover {
+  transform: translateY(-2px);
+  background-color: #ffffff;
+  border-color: var(--primary-color);
 }
 
-#listTasks input[type="checkbox"]{
-    width:20px;
-    height:20px;
-    cursor:pointer;
-    accent-color:#00b4d8;
+/* گروه‌بندی دکمه‌های درون لیست */
+.actions {
+  display: flex;
+  gap: 10px;
 }
 
-#listTasks button{
-    background:#0077b6;
-    color:white;
-    border-radius:10px;
-    padding:8px 14px;
+/* دکمه‌های ویرایش و حذف */
+button.edit-btn,
+button.delete-btn {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-#listTasks button:hover{
-    background:#023e8a;
+button.edit-btn {
+  background-color: var(--edit-color);
+  color: #713f12;
 }
 
-/* Responsive */
-@media (max-width:500px){
-
-    input{
-        width:90%;
-        margin-bottom:15px;
-        margin-right:0;
-    }
-
-    #categorySelector{
-        width:90%;
-        margin-bottom:15px;
-        margin-right:0;
-    }
-
-    #addButton{
-        width:90%;
-    }
-
-    #listTasks{
-        width:90%;
-    }
+button.edit-btn:hover {
+  background-color: var(--edit-hover);
+  color: #ffffff;
 }
 
+button.delete-btn {
+  background-color: var(--delete-color);
+  color: #7f1d1d;
+}
+
+button.delete-btn:hover {
+  background-color: var(--delete-hover);
+  color: #ffffff;
+}

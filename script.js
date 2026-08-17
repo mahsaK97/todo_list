@@ -3,6 +3,9 @@ const add_Button =document.getElementById("addButton");
 const list =document.getElementById("listTasks");
 const  category_selector = document.getElementById("categorySelector");
 const deadline_input = document.getElementById("deadline");
+const searchInput = document.getElementById("searchInput");
+
+
 
 let list_of_task = (JSON.parse(
         localStorage.getItem("list_of_task")))
@@ -31,12 +34,31 @@ function savetask()
     localStorage.setItem("list_of_task" , JSON.stringify(list_of_task));
 }
 
+searchInput.addEventListener("input", function ()
+{
+    rendertask();
+});
+
+
 function rendertask()
 {
     list.innerHTML = "";
-    list_of_task.forEach((task , index) => {
-        createTaskElement(task, index);
-    });
+
+        let searchTerm=searchInput.value.trim().toLowerCase();
+        let filterTasks=list_of_task.filter(task =>
+        task.text.toLowerCase().includes(searchTerm));
+
+        if (filterTasks.length === 0) {
+        let emptyMsg = document.createElement("li");
+        emptyMsg.textContent = "No tasks found.";
+        list.appendChild(emptyMsg);
+        return;
+    }
+
+        filterTasks.forEach((task) => {
+        let realIndex =list_of_task.indexOf(task);
+        createTaskElement(task,realIndex);
+        });
 }
 
 function  createTaskElement(task,index)

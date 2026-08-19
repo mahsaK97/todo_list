@@ -4,8 +4,86 @@ const list =document.getElementById("listTasks");
 const  category_selector = document.getElementById("categorySelector");
 const deadline_input = document.getElementById("deadline");
 const searchInput = document.getElementById("searchInput");
+const timer_displayer=document.getElementById("timer_displayer");
+const timer_mood=document.getElementById("timer_mood");
+const start_timer=document.getElementById("start_timer");
+const pause_timer= document.getElementById("pause_timer");
+const reset_timer=document.getElementById("reset_timer");
+const exportbtn=document.getElementById("exportbtn");
 
 
+
+const work_time=25 * 60;
+const rest_time=5 * 60;
+
+let time_left=work_time;
+let isWorkmood=true;
+let timeInterval=null;
+
+
+function  Update_Display()
+{
+    let minutes= Math.floor(time_left / 60);
+    let seconds= time_left % 60;
+
+
+    let minutesStr=String(minutes).padStart(2,"0");
+    let secondsStr =String(seconds).padStart(2, "0");
+
+
+    timer_displayer.textContent=`${minutesStr}:${secondsStr}`;
+
+}
+
+
+function tick()
+{
+    if(time_left <=0)
+    {
+        switchMood();
+        return;
+    }
+
+    time_left--;
+
+    Update_Display();
+
+}
+function switchMood()
+{
+
+    isWorkmood =!isWorkmood;
+    time_left = isWorkmood ? work_time : rest_time;
+    timer_mood.textContent=isWorkmood ? "Work time" : "Break time";
+    Update_Display();
+
+    alert(isWorkmood ? "Break's over. Bak to work." : "Time for a short break");
+
+}
+
+start_timer.addEventListener("click", function ()
+{
+    if(timeInterval != null) return;
+    timeInterval =setInterval(tick,1000)
+});
+
+pause_timer.addEventListener("click" , function ()
+{
+    clearInterval(timeInterval);
+    timeInterval =null;
+});
+
+reset_timer.addEventListener("click", function ()
+{
+    clearInterval(timeInterval);
+    timeInterval=null;
+    isWorkmood =true;
+    time_left=work_time;
+    timer_mood.textContent ="work_time";
+    Update_Display();
+});
+
+Update_Display();
 
 let list_of_task = (JSON.parse(
         localStorage.getItem("list_of_task")))
@@ -165,6 +243,22 @@ function  createTaskElement(task,index)
         li.appendChild(deadlineTag);
         list.appendChild(li);
 }
+
+exportbtn.addEventListener("click" , function ()
+{
+    let datastr=JSON.stringify(list_of_task, null ,2);
+    let blob= new Blob([datastr] ,{ type : "application/JSON"});
+    let fileURl=URL.createObjectURL(blob);
+
+
+    let link=document.createElement("a");
+    link.href = fileURl;
+    link.download ="task.json";
+
+
+    link.click();
+    URL.revokeObjectURL(fileURl);
+});
 
 function main_func()
 {

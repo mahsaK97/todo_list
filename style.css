@@ -166,3 +166,61 @@ button.delete-btn {
 button.delete-btn:hover {
   background-color: var(--delete-hover);
 }
+
+
+
+/* بخش پومودورو تایمر */
+#pomodoroTimer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  padding: 25px;
+  margin-top: 20px;
+
+  background-color: var(--item-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+
+  text-align: center;
+}
+
+#pomodoroTimer h2 {
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+#timerDisplay {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 2px;
+}
+
+#timerMode {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* دکمه‌های تایمر، هم‌ردیف و با فاصله */
+#pomodoroTimer > button {
+  margin: 4px;
+}
+
+/* حالت استراحت: رنگ متفاوت برای تمایز بصری */
+#pomodoroTimer.break-mode {
+  background-color: #dbeafe;
+  border-color: var(--primary-hover);
+}
+
+#pomodoroTimer.break-mode #timerMode {
+  color: var(--primary-hover);
+}
